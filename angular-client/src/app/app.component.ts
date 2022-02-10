@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { AuthService } from './core/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,9 @@ export class AppComponent {
   title = 'Boilerplate';
   viewTitle = this.title;
 
-  // TODO
-  loggedIn = true;
   showUserMenu = false;
 
-  constructor() {}
+  constructor(public authService: AuthService) {}
 
   toggleUserMenu() {
     this.showUserMenu = !this.showUserMenu;
@@ -22,13 +21,13 @@ export class AppComponent {
   logIn(event: MouseEvent) {
     event.preventDefault();
 
-    console.warn('Implement logIn()');
+    this.authService.logIn();
   }
 
   logOut(event: MouseEvent) {
     event.preventDefault();
 
-    console.warn('Implement logOut()');
+    this.authService.logOut();
   }
 
   // Changes the view title when a new route is activated in router-outlet

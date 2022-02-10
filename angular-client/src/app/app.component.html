@@ -15,7 +15,8 @@
             <div class="ml-10 flex items-baseline space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <a
-                href="#"
+                routerLink="/"
+                routerLinkActive="router-link-active"
                 class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
                 aria-current="page"
                 >Home</a
@@ -37,7 +38,7 @@
         </div>
 
         <!-- User Profile -->
-        <div *ngIf="loggedIn" class="hidden md:block">
+        <div *ngIf="authService.loggedIn" class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
             <button
               type="button"
@@ -102,6 +103,8 @@
               >
                 <!-- Active: "bg-gray-100", Not Active: "" -->
                 <a
+                  routerLink="/user/profile"
+                  routerLinkActive="router-link-active"
                   class="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabindex="-1"
@@ -110,6 +113,8 @@
                 >
 
                 <a
+                  routerLink="/user/settings"
+                  routerLinkActive="router-link-active"
                   class="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabindex="-1"
@@ -131,7 +136,7 @@
           </div>
         </div>
 
-        <div *ngIf="!loggedIn" class="hidden md:block">
+        <div *ngIf="!authService.loggedIn" class="hidden md:block">
           <a
             href="#"
             class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -199,6 +204,8 @@
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <a
+          routerLink="/"
+          routerLinkActive="router-link-active"
           href="#"
           class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
           aria-current="page"
@@ -219,7 +226,10 @@
       </div>
 
       <!-- User Profile -->
-      <div *ngIf="loggedIn" class="pt-4 pb-3 border-t border-gray-700">
+      <div
+        *ngIf="authService.loggedIn"
+        class="pt-4 pb-3 border-t border-gray-700"
+      >
         <div class="flex items-center px-5">
           <div class="flex-shrink-0">
             <img
@@ -281,7 +291,10 @@
         </div>
       </div>
 
-      <div *ngIf="!loggedIn" class="pt-4 pb-3 border-t border-gray-700">
+      <div
+        *ngIf="!authService.loggedIn"
+        class="pt-4 pb-3 border-t border-gray-700"
+      >
         <a
           href="#"
           class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
