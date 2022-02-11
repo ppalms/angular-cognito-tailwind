@@ -9,7 +9,7 @@ import {
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { authCodeFlowConfig } from './auth-config';
+import { codeFlowConfig } from './auth-config';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   runInitialLoginSequence = async (): Promise<void> => {
-    this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.configure(codeFlowConfig);
 
     return await this.oauthService
       .loadDiscoveryDocumentAndTryLogin()
