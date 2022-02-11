@@ -1,1 +1,5 @@
 .DS_Store
+infrastructure/.terraform
+infrastructure/terraform.tfvars
+infrastructure/terraform.tfstate
+infrastructure/terraform.tfstate.backup
