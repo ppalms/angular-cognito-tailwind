@@ -2,7 +2,7 @@ import { AuthConfig } from 'angular-oauth2-oidc';
 
 const baseAuthUrl = 'https://auth.xxxxxxx.xxx';
 
-export const authCodeFlowConfig: AuthConfig = {
+export const codeFlowConfig: AuthConfig = {
   issuer: 'https://cognito-idp.xxxxxxxx.amazonaws.com/xxxxxxxxx',
 
   strictDiscoveryDocumentValidation: false,
