@@ -1,4 +1,4 @@
-resource "aws_ssm_parameter" "auth_url" {
+resource "aws_ssm_parameter" "auth_base_url" {
   name  = "/${var.s3_bucket_name}/${var.s3_bucket_env}/cognito/auth_base_url"
   type  = "String"
   value = "https://auth.${var.domain}"
@@ -12,7 +12,7 @@ resource "aws_ssm_parameter" "auth_issuer" {
   tags  = local.common_tags
 }
 
-resource "aws_ssm_parameter" "cognito_client_id" {
+resource "aws_ssm_parameter" "angular_client_id" {
   name        = "/${var.s3_bucket_name}/${var.s3_bucket_env}/cognito/angular_client_id"
   description = "Angular client ID"
   type        = "SecureString"

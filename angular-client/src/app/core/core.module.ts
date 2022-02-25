@@ -1,6 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { authAppInitializerFactory, AuthService } from './auth.service';
+import { AWSService } from '../shared/aws.service';
 
 @NgModule({
   declarations: [],
@@ -9,7 +10,7 @@ import { authAppInitializerFactory, AuthService } from './auth.service';
     {
       provide: APP_INITIALIZER,
       useFactory: authAppInitializerFactory,
-      deps: [AuthService],
+      deps: [AuthService, AWSService],
       multi: true,
     },
   ],
