@@ -76,32 +76,28 @@ export class AuthService {
     }
   }
 
-  async runInitialLoginSequence(awsService: AWSService): Promise<void> {
-    await this.configureAuthorizationCodeFlow(awsService);
-
-    return this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
-      // If the user attempted to access a protected route before being
-      // redirected to the login page, send them there
-      if (
-        this.oauthService.state &&
-        this.oauthService.state !== 'undefined' &&
-        this.oauthService.state !== 'null'
-      ) {
-        let stateUrl = this.oauthService.state;
-        if (stateUrl.startsWith('/') === false) {
-          stateUrl = decodeURIComponent(stateUrl);
-        }
-
-        this.router.navigateByUrl(stateUrl);
-      }
-    });
-  }
-
-  private async configureAuthorizationCodeFlow(awsService: AWSService) {
-    const codeFlowConfig = await codeFlowConfigFactory(awsService);
-
+  runInitialLoginSequence = async (): Promise<void> => {
     this.oauthService.configure(codeFlowConfig);
-  }
+
+    return await this.oauthService
+      .loadDiscoveryDocumentAndTryLogin()
+      .then(() => {
+        // Send the user to the route they attempted to access before being
+        // redirected to the login page
+        if (
+          this.oauthService.state &&
+          this.oauthService.state !== 'undefined' &&
+          this.oauthService.state !== 'null'
+        ) {
+          let stateUrl = this.oauthService.state;
+          if (stateUrl.startsWith('/') === false) {
+            stateUrl = decodeURIComponent(stateUrl);
+          }
+
+          this.router.navigateByUrl(stateUrl);
+        }
+      });
+  };
 }
 
 export function authAppInitializerFactory(

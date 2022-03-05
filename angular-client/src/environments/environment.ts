@@ -4,10 +4,11 @@
 
 export const environment = {
   production: false,
-  ssmAuthParamPath: '/xxxxx.com/development/cognito',
-  ssmUserAccessKeyId: 'XXXXXXXXXXXXXXXX',
-  ssmUserSecretAccessKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  ssmUserRegion: 'us-east-2',
+  codeFlowConfig: {
+    issuer: '',
+    baseUrl: '',
+    clientId: '',
+  },
 };
 
 /*
