@@ -9,8 +9,7 @@ import {
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AWSService } from '../shared/aws.service';
-import { codeFlowConfigFactory } from './auth-config-factory';
+import { codeFlowConfig } from './auth-config';
 
 @Injectable({
   providedIn: 'root',
@@ -76,37 +75,32 @@ export class AuthService {
     }
   }
 
-  async runInitialLoginSequence(awsService: AWSService): Promise<void> {
-    await this.configureAuthorizationCodeFlow(awsService);
-
-    return this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
-      // If the user attempted to access a protected route before being
-      // redirected to the login page, send them there
-      if (
-        this.oauthService.state &&
-        this.oauthService.state !== 'undefined' &&
-        this.oauthService.state !== 'null'
-      ) {
-        let stateUrl = this.oauthService.state;
-        if (stateUrl.startsWith('/') === false) {
-          stateUrl = decodeURIComponent(stateUrl);
-        }
-
-        this.router.navigateByUrl(stateUrl);
-      }
-    });
-  }
-
-  private async configureAuthorizationCodeFlow(awsService: AWSService) {
-    const codeFlowConfig = await codeFlowConfigFactory(awsService);
-
+  runInitialLoginSequence = async (): Promise<void> => {
     this.oauthService.configure(codeFlowConfig);
-  }
+
+    return await this.oauthService
+      .loadDiscoveryDocumentAndTryLogin()
+      .then(() => {
+        // Send the user to the route they attempted to access before being
+        // redirected to the login page
+        if (
+          this.oauthService.state &&
+          this.oauthService.state !== 'undefined' &&
+          this.oauthService.state !== 'null'
+        ) {
+          let stateUrl = this.oauthService.state;
+          if (stateUrl.startsWith('/') === false) {
+            stateUrl = decodeURIComponent(stateUrl);
+          }
+
+          this.router.navigateByUrl(stateUrl);
+        }
+      });
+  };
 }
 
 export function authAppInitializerFactory(
-  authService: AuthService,
-  awsService: AWSService
+  authService: AuthService
 ): () => Promise<void> {
-  return () => authService.runInitialLoginSequence(awsService);
+  return () => authService.runInitialLoginSequence();
 }
