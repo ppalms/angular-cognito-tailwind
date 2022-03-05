@@ -9,8 +9,7 @@ import {
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AWSService } from '../shared/aws.service';
-import { codeFlowConfigFactory } from './auth-config-factory';
+import { codeFlowConfig } from './auth-config';
 
 @Injectable({
   providedIn: 'root',
@@ -101,8 +100,7 @@ export class AuthService {
 }
 
 export function authAppInitializerFactory(
-  authService: AuthService,
-  awsService: AWSService
+  authService: AuthService
 ): () => Promise<void> {
-  return () => authService.runInitialLoginSequence(awsService);
+  return () => authService.runInitialLoginSequence();
 }
